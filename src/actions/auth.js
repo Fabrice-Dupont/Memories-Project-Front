@@ -1,6 +1,10 @@
+import * as api from '../api/index'
+import { AUTH } from '../constants/actionTypes'
+
 export const signin = (FormData, history) => async dispatch => {
   try {
-    // log in the current user..
+    const { data } = await api.signIn(FormData)
+    dispatch({ type: AUTH, data })
     history.push('/')
   } catch (error) {
     console.log(error)
@@ -9,7 +13,8 @@ export const signin = (FormData, history) => async dispatch => {
 
 export const signup = (FormData, history) => async dispatch => {
   try {
-    // signup the current user..
+    const { data } = await api.signUp(FormData)
+    dispatch({ type: AUTH, data })
     history.push('/')
   } catch (error) {
     console.log(error)
