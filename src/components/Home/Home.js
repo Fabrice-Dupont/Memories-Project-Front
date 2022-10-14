@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { getPosts } from '../../actions/posts'
+import { getPosts, getPostsBySearch } from '../../actions/posts'
 import Form from '../Form/Form'
 import Pagination from '../Pagination'
 import Posts from '../Posts/Posts'
@@ -29,7 +29,7 @@ const Home = () => {
   const query = useQuery()
   const history = useHistory()
   const page = query.get('page') || 1
-  const seartchQuery = query.get('searchQuery')
+  const searchQuery = query.get('searchQuery')
   const [search, setSearch] = useState('')
   const [tags, setTags] = useState([])
 
@@ -38,8 +38,11 @@ const Home = () => {
   }, [currentId, dispatch])
 
   const searchPost = () => {
-    if (search.trim()) {
-      // dispatch -> fetch search post
+    if (search.trim() || tags) {
+      dispatch(getPostsBySearch({ search, tags: tags.join(',') }))
+      history.push(
+        `/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`
+      )
     } else {
       history.push('/')
     }
