@@ -56,7 +56,7 @@ const Post = ({ post, setCurrentId }) => {
   const openPost = () => {
     history.push(`/posts/${post._id}`)
   }
-
+  //console.log(post.selectedFile)
   return (
     <Card className={classes.card} raised elevation={6}>
       <ButtonBase className={classes.cardAction} onClick={openPost}>
